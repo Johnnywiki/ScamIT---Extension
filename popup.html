@@ -1,135 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <title>ScamIT</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Nunito', sans-serif;
-      background-color: #f2f6fc;
+      font-family: Arial, sans-serif;
       width: 320px;
-      padding: 16px;
+      padding: 10px;
       text-align: center;
     }
-
-    h1 {
-      font-size: 20px;
-      margin-bottom: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      color: #333;
-    }
-
-    input {
+    input, button {
       width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      font-size: 14px;
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 12px;
-      background-color: #6c63ff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #5b52e6;
-    }
-
-    img {
-      border-radius: 50%;
-      background-color: #fff;
-      padding: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-top: 10px;
-    }
-
-    #visualResult {
-      display: none;
-      background-color: #ffffff;
-      border-radius: 16px;
-      padding: 12px;
-      margin-top: 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    #threatType {
-      font-size: 16px;
-      font-weight: bold;
-      margin-top: 10px;
-      color: #444;
-    }
-
-    #threatDesc {
-      font-size: 14px;
-      margin-top: 6px;
-      color: #666;
-    }
-
     #result {
       margin-top: 10px;
       font-weight: bold;
-      color: #333;
     }
-
-    h3 {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #333;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 4px;
-    }
-
-    #historyList {
-      text-align: left;
-      font-size: 13px;
+    #visualResult {
       margin-top: 10px;
-      max-height: 160px;
-      overflow-y: auto;
-      padding-left: 10px;
-      color: #444;
     }
-
-    * {
-      transition: all 0.2s ease-in-out;
+    img {
+      margin-top: 10px;
+      width: 48px;
+      height: 48px;
+    }
+    #threatType {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    #threatDesc {
+      font-size: 14px;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>
-    <img src="icons/shield.png" width="24" height="24" alt="ScamIT Logo" />
-    ScamIT
-  </h1>
-
-  <input type="text" id="urlInput" placeholder="Cole o link aqui" />
+  <h2>🔍 ScamIT</h2>aqui
+  <input type="text" id="urlInput" placeholder="Insira o link para verificação " />
   <button id="checkBtn">Verificar</button>
 
-  <div id="visualResult">
-    <img id="threatIcon" src="" alt="Ícone de ameaça" width="48" height="48" />
+  <div id="visualResult" style="display: none;">
+    <img id="threatIcon" src="" alt="Ícone" />
     <div id="threatType"></div>
     <div id="threatDesc"></div>
   </div>
 
   <p id="result"></p>
-
-  <h3>Histórico</h3>
-  <ul id="historyList"></ul>
 
   <script src="popup.js"></script>
 </body>
