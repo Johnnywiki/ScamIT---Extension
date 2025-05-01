@@ -17,11 +17,59 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   resultEl.textContent = "Verificando...";
 
   try {
-    const response = await fetch("https://scamit-urlbackend.vercel.app/api/url", {
+    const response = await fetch("https://seu-backend.vercel.app/api/url", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: inputUrl })
+      body: JSON.stringify({ url })
     });
+  
+    if (response.status === 429) {
+      resultEl.textContent = "Muitas requisições. Tente novamente em instantes.";
+      return;
+    }
+  
+    if (response.status === 400) {
+      resultEl.textContent = "URL inválida ou mal formatada.";
+      return;
+    }
+  
+    if (response.status === 405) {
+      resultEl.textContent = "Método de requisição não permitido.";
+      return;
+    }
+  
+    if (!response.ok) {
+      resultEl.textContent = "Erro no servidor. Tente novamente mais tarde.";
+      return;
+    }
+  
+    const data = await response.json();
+  
+    if (data.safe) {
+      threatIcon.src = "icons/shield.png";
+      threatType.textContent = "Link seguro";
+      threatDesc.textContent = "Nenhuma ameaça conhecida foi detectada para esta URL.";
+    } else {
+      const threat = data.threatType;
+      const info = threatInfo[threat] || {
+        name: "Ameaça desconhecida",
+        icon: "icons/error.png",
+        description: "Este site está listado como perigoso, mas o tipo não foi identificado."
+      };
+  
+      threatIcon.src = info.icon;
+      threatType.textContent = info.name;
+      threatDesc.textContent = info.description;
+    }
+  
+    visualResult.style.display = "block";
+    resultEl.textContent = "";
+  
+  } catch (error) {
+    console.error(error);
+    resultEl.textContent = "Erro de rede. Tente novamente.";
+  }
+  
 
     const data = await response.json();
 
