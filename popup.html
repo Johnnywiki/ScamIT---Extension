@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>ScamIT</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 320px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    img {
+      margin-top: 10px;
+    }
+
+    #result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #threatType {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    #threatDesc {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    #visualResult {
+      margin-top: 15px;
+    }
+
+    #historyList {
+      margin-top: 10px;
+      text-align: left;
+      font-size: 13px;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      font-size: 16px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <img src="icons/shield.png" width="24" height="24" alt="ScamIT Logo" />
+    ScamIT
+  </h1>
+
+  <input type="text" id="urlInput" placeholder="Insira o link para verificação" />
+  <button id="checkBtn">Verificar</button>
+
+  <div id="visualResult" style="display: none;">
+    <img id="threatIcon" src="" alt="Ícone de ameaça" width="48" height="48" />
+    <div id="threatType"></div>
+    <div id="threatDesc"></div>
+  </div>
+
+  <p id="result"></p>
+
+  <h3>Histórico</h3>
+  <ul id="historyList"></ul>
+
+  <script src="popup.js"></script>
+</body>
+</html>

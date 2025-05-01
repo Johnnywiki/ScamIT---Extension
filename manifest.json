@@ -1,0 +1,12 @@
+{
+    "manifest_version": 3,
+    "name": "ScamIT",
+    "version": "1.0",
+    "description": "Verifica se um link é malicioso atráves do GSFV4.",
+    "permissions": ["storage"],
+    "host_permissions": ["https://scamit-urlbackend.vercel.app/api/url"],
+    "action": {
+      "default_popup": "popup.html"
+    }
+  }
+  
