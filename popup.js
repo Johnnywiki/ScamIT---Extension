@@ -28,6 +28,7 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   const threatIcon = document.getElementById("threatIcon");
   const threatType = document.getElementById("threatType");
   const threatDesc = document.getElementById("threatDesc");
+  const checkBtn = document.getElementById("checkBtn");
 
   visualResult.style.display = "none";
   resultEl.textContent = "";
@@ -36,6 +37,9 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
     resultEl.textContent = "Nenhum link inserido.";
     return;
   }
+
+  // Desabilita o botão de enviar para evitar múltiplos cliques
+  checkBtn.disabled = true;
 
   resultEl.textContent = "Verificando...";
 
@@ -46,7 +50,6 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
       body: JSON.stringify({ url: urlInput })
     });
 
-    // Tenta obter o JSON de qualquer forma
     const data = await response.json();
 
     if (!response.ok) {
@@ -96,6 +99,9 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   } catch (error) {
     console.error("Erro na requisição:", error);
     resultEl.textContent = "Erro ao verificar o link. A API pode estar fora do ar ou o link é inválido!";
+  } finally {
+    // Libera o botão após a requisição ser concluída
+    checkBtn.disabled = false;
   }
 });
 
