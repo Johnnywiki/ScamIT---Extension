@@ -46,8 +46,30 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
       body: JSON.stringify({ url: urlInput })
     });
 
+    // Tenta obter o JSON de qualquer forma
     const data = await response.json();
 
+    if (!response.ok) {
+      switch (response.status) {
+        case 400:
+          resultEl.textContent = "URL inválida ou mal formatada.";
+          break;
+        case 405:
+          resultEl.textContent = "Método não permitido. Use POST.";
+          break;
+        case 429:
+          resultEl.textContent = "Muitas requisições. Aguarde e tente novamente.";
+          break;
+        case 500:
+          resultEl.textContent = data.error || "Erro interno no servidor.";
+          break;
+        default:
+          resultEl.textContent = "Erro inesperado. Tente novamente mais tarde.";
+      }
+      return;
+    }
+
+    // Se a resposta for de verificação de ameaça tradicional
     if (data && data.matches && data.matches.length > 0) {
       const threat = data.matches[0].threatType;
       const info = threatInfo[threat] || {
@@ -59,26 +81,24 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
       threatIcon.src = info.icon;
       threatType.textContent = info.name;
       threatDesc.textContent = info.description;
-
       saveToHistory(urlInput, info.name);
+
     } else {
       threatIcon.src = "icons/shield.png";
       threatType.textContent = "Link seguro";
       threatDesc.textContent = "Nenhuma ameaça conhecida foi detectada para esta URL.";
-
       saveToHistory(urlInput, null);
     }
 
     visualResult.style.display = "block";
     resultEl.textContent = "";
+
   } catch (error) {
-    console.error(error);
-    visualResult.style.display = "none";
+    console.error("Erro na requisição:", error);
     resultEl.textContent = "Erro ao verificar o link. A API pode estar fora do ar ou o link é inválido!";
   }
 });
 
-// Salvar no histórico
 function saveToHistory(url, threatType) {
   const history = JSON.parse(localStorage.getItem("scanHistory")) || [];
   history.unshift({
@@ -92,7 +112,6 @@ function saveToHistory(url, threatType) {
   renderHistory();
 }
 
-// Mostrar histórico
 function renderHistory() {
   const historyList = document.getElementById("historyList");
   const history = JSON.parse(localStorage.getItem("scanHistory")) || [];
@@ -111,5 +130,4 @@ function renderHistory() {
   });
 }
 
-// Inicializa histórico ao abrir
 renderHistory();
