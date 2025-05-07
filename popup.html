@@ -13,8 +13,14 @@
       text-align: center;
     }
 
-    #logoContainer {
+    h1 {
+      font-size: 20px;
       margin-bottom: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #333;
     }
 
     input {
@@ -47,9 +53,11 @@
     }
 
     img {
+      border-radius: 50%;
       background-color: #fff;
       padding: 6px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 10px;
     }
 
     #visualResult {
@@ -102,12 +110,13 @@
       transition: all 0.2s ease-in-out;
     }
   </style>
+
 </head>
 <body>
-  <!-- NOVO: só o símbolo da logo -->
-  <div id="logoContainer">
-    <img src="icons/scamit.png" width="48" height="48" alt="ScamIT Logo" />
-  </div>
+  <h1>
+    <img src="icons/shield.png" width="24" height="24" alt="ScamIT Logo" />
+    ScamIT
+  </h1>
 
   <input type="text" id="urlInput" placeholder="Cole o link aqui" />
   <button id="checkBtn">Verificar</button>
