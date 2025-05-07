@@ -7,6 +7,12 @@
     "host_permissions": ["https://scamit-urlbackend.vercel.app/api/url"],
     "action": {
       "default_popup": "popup.html"
+    },
+    "icons": {
+    "16": "icons/scamit.png",
+    "32": "icons/scamit.png",
+    "48": "icons/scamit.png",
+    "128": "icons/scamit.png"
     }
   }
   
