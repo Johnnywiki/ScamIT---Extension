@@ -32,6 +32,17 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   visualResult.style.display = "none";
   resultEl.textContent = "";
 
+  let parsedURL;
+try {
+  parsedURL = new URL(urlInput);
+  if (!["http:", "https:"].includes(parsedURL.protocol)) {
+    throw new Error("Protocolo inválido");
+  }
+} catch (err) {
+  resultEl.textContent = "Não é um link válido!";
+  return;
+}
+
   if (!urlInput) {
     resultEl.textContent = "Nenhum link inserido.";
     return;
