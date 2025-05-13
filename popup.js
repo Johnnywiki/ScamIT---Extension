@@ -28,23 +28,29 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   const threatIcon = document.getElementById("threatIcon");
   const threatType = document.getElementById("threatType");
   const threatDesc = document.getElementById("threatDesc");
+  const checkBtn = document.getElementById("checkBtn");
+
+  // Desabilita o botão enquanto a verificação está em andamento
+  checkBtn.disabled = true;
 
   visualResult.style.display = "none";
   resultEl.textContent = "";
 
   let parsedURL;
-try {
-  parsedURL = new URL(urlInput);
-  if (!["http:", "https:"].includes(parsedURL.protocol)) {
-    throw new Error("Protocolo inválido");
+  try {
+    parsedURL = new URL(urlInput);
+    if (!["http:", "https:"].includes(parsedURL.protocol)) {
+      throw new Error("Protocolo inválido");
+    }
+  } catch (err) {
+    resultEl.textContent = "Não é um link válido!";
+    checkBtn.disabled = false; // Reabilita o botão
+    return;
   }
-} catch (err) {
-  resultEl.textContent = "Não é um link válido!";
-  return;
-}
 
   if (!urlInput) {
     resultEl.textContent = "Nenhum link inserido.";
+    checkBtn.disabled = false; // Reabilita o botão
     return;
   }
 
@@ -56,6 +62,17 @@ try {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url: urlInput })
     });
+
+    // Verifica se a resposta foi ok antes de tentar o json
+    if (!response.ok) {
+      if (response.status === 429) {
+        resultEl.textContent = "Você atingiu o limite de requisições. Tente novamente mais tarde.";
+        checkBtn.disabled = true; // Desabilita o botão ao atingir 429
+        setTimeout(() => checkBtn.disabled = false, 60000); // Reabilita o botão após 1 minuto
+        return;
+      }
+      throw new Error("Falha ao verificar a URL");
+    }
 
     // Tenta obter o JSON de qualquer forma
     const data = await response.json();
@@ -88,6 +105,9 @@ try {
     visualResult.style.display = "none";
     resultEl.textContent = "Erro ao verificar o link. A API pode estar fora do ar ou o link é inválido!";
   }
+
+  // Reabilita o botão após a verificação
+  checkBtn.disabled = false;
 });
 
 // Salvar no histórico
@@ -99,6 +119,7 @@ function saveToHistory(url, threatType) {
     date: new Date().toLocaleString()
   });
 
+  // Limita o histórico a 5 entradas
   if (history.length > 5) history.pop();
   localStorage.setItem("scanHistory", JSON.stringify(history));
   renderHistory();
