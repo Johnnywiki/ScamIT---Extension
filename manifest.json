@@ -14,6 +14,11 @@
     "32": "icons/scamit.png",
     "48": "icons/scamit.png",
     "128": "icons/scamit.png"
+    },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "scamit@project.org"
     }
   }
+}
   
