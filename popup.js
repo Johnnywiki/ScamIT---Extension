@@ -104,24 +104,33 @@ function saveToHistory(url, threatType) {
   renderHistory();
 }
 
-// Mostrar histórico
 function renderHistory() {
   const historyList = document.getElementById("historyList");
   const history = JSON.parse(localStorage.getItem("scanHistory")) || [];
 
-  historyList.innerHTML = "";
+  historyList.innerHTML = ""; // Limpa a lista antes de renderizar
 
   history.forEach(entry => {
     const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${entry.url}</strong><br />
-      Tipo: ${entry.threatType}<br />
-      <small>${entry.date}</small><hr/>
-    `;
     li.style.marginBottom = "5px";
+
+    const urlEl = document.createElement("strong");
+    urlEl.textContent = entry.url;
+
+    const typeEl = document.createElement("div");
+    typeEl.textContent = `Tipo: ${entry.threatType}`;
+
+    const dateEl = document.createElement("small");
+    dateEl.textContent = entry.date;
+
+    const hrEl = document.createElement("hr");
+    li.appendChild(urlEl);
+    li.appendChild(document.createElement("br"));
+    li.appendChild(typeEl);
+    li.appendChild(document.createElement("br"));
+    li.appendChild(dateEl);
+    li.appendChild(hrEl);
+
     historyList.appendChild(li);
   });
 }
-
-// Inicializa histórico ao abrir
-renderHistory();
