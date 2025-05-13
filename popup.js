@@ -66,9 +66,9 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
     // Verifica se a resposta foi ok antes de tentar o json
     if (!response.ok) {
       if (response.status === 429) {
-        resultEl.textContent = "Você atingiu o limite de requisições. Tente novamente mais tarde.";
-        checkBtn.disabled = true; // Desabilita o botão ao atingir 429
-        setTimeout(() => checkBtn.disabled = false, 60000); // Reabilita o botão após 1 minuto
+        resultEl.textContent = "Você atingiu o limite de requisições. Tente novamente em alguns instantes!.";
+        checkBtn.disabled = true;
+        setTimeout(() => checkBtn.disabled = false, 60000);
         return;
       }
       throw new Error("Falha ao verificar a URL");
