@@ -30,7 +30,6 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   const threatDesc = document.getElementById("threatDesc");
   const checkBtn = document.getElementById("checkBtn");
 
-  // Desabilita o botão enquanto a verificação está em andamento
   checkBtn.disabled = true;
 
   visualResult.style.display = "none";
@@ -44,13 +43,13 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
     }
   } catch (err) {
     resultEl.textContent = "Não é um link válido!";
-    checkBtn.disabled = false; // Reabilita o botão
+    checkBtn.disabled = false;
     return;
   }
 
   if (!urlInput) {
     resultEl.textContent = "Nenhum link inserido.";
-    checkBtn.disabled = false; // Reabilita o botão
+    checkBtn.disabled = false;
     return;
   }
 
@@ -92,8 +91,8 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
       saveToHistory(urlInput, info.name);
     } else {
       threatIcon.src = "icons/shield.png";
-      threatType.textContent = "Link seguro";
-      threatDesc.textContent = "Nenhuma ameaça conhecida foi detectada para esta URL.";
+      threatType.textContent = "Nenhuma ameaça conhecida";
+      threatDesc.textContent = "A URL não apresenta indícios de ameaça com base nas fontes verificadas, mas isso não garante segurança total.";
 
       saveToHistory(urlInput, null);
     }
@@ -103,14 +102,13 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
   } catch (error) {
     console.error(error);
     visualResult.style.display = "none";
-    resultEl.textContent = "Erro ao verificar o link. A API pode estar fora do ar ou o link é inválido!";
+    resultEl.textContent = "Erro ao verificar o link. Tente novamente em alguns instantes!";
   }
 
   // Reabilita o botão após a verificação
   checkBtn.disabled = false;
 });
 
-// Salvar no histórico
 function saveToHistory(url, threatType) {
   const history = JSON.parse(localStorage.getItem("scanHistory")) || [];
   history.unshift({
